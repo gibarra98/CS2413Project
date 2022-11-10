@@ -1,0 +1,74 @@
+.main__userprofile {
+    width: 20%;
+    padding: 0 20px 0 40px;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+    position: relative;
+  }
+  .profile__card {
+    background-color: #fff;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+  .profile__card.user__profile__image {
+    margin: 0 auto;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 20px;
+  }
+  .profile__card .profile__image {
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+  }
+  .box{
+    height: 20px;
+  }
+  .profile__card h4 {
+    margin-bottom: 0;
+  }
+  .profile__card p {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #1e1e1e;
+  }
+  .profile__card .card__header {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+    padding: 15px 20px;
+  }
+  .profile__card .card__header h4 {
+    margin: 0;
+  }
+  .profile__card .card__header i {
+    font-size: 20px;
+  }
+  .card__content {
+    border-top: 1px solid #ebe7fb;
+    width: 100%;
+    padding-left: 8px;
+    padding-top: 2x;
+    color: #6d6a6a;
+    font-size: 14px;
+    transform-origin: top;
+    animation-name: showIn;
+    animation-duration: 0.2s; /* or: Xms */
+    animation-iteration-count: 1;
+    animation-direction: normal; /* or: normal */
+    animation-timing-function: cubic-bezier(
+      0.88,
+      0.19,
+      0.37,
+      1.11
+    ); /* or: ease, ease-in, ease-in-out, linear, cubic-bezier(x1, y1, x2, y2) */
+    animation-fill-mode: both; /* or: backwards, both, none */
+    animation-delay: 0.2s; /* or: Xms */
+  }
