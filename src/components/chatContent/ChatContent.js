@@ -22,6 +22,16 @@ export default class ChatContent extends Component {
     this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
+  importNewMessage(message) {
+    this.chatItms.push({
+      key: 1,
+      type: "",
+      msg: message,
+      image:
+        "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
+    })
+  }
+
   addNewMessage = () => {
     this.chatItms.push({
       key: 1,
@@ -32,25 +42,20 @@ export default class ChatContent extends Component {
     })
   }
 
-  componentDidMount() {
-    window.addEventListener("keydown", (e) => {
-      if (e.key === 'Enter') {
-        if (this.state.msg != "") {
-          this.chatItms.push({
-            key: 1,
-            type: "",
-            msg: this.state.msg,
-            image:
-              "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-          });
-          this.setState({ chat: [...this.chatItms] });
-          this.scrollToBottom();
-          this.setState({ msg: "" });
-        }
-      }
-    });
-    this.scrollToBottom();
+  onButtonClick = (e) => {
+    if (this.state.msg != "") {
+      this.chatItms.push({
+        key: 1,
+        type: "",
+        msg: this.state.msg,
+        image:
+          "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
+      });
+      this.setState({ chat: [...this.chatItms] });
+      this.scrollToBottom();
+    }
   }
+
   onStateChange = (e) => {
     this.setState({ msg: e.target.value });
   };
@@ -82,17 +87,18 @@ export default class ChatContent extends Component {
           <div ref={this.messagesEndRef} />
         </div>
         <div className="content__footer">
-          <div className="sendNewMessage">
+          <form className="sendNewMessage" id='chat-form'>
             <input
+              id = "msg"
               type="text"
               placeholder="Type a message here"
               onChange={this.onStateChange}
               value={this.state.msg}
             />
-            <button className="btnSendMsg" id="sendMsgBtn">
+            <button className="btnSendMsg" onClick={this.onButtonClick}>
               <FontAwesomeIcon icon={faPaperPlane} />
             </button>
-          </div>
+          </form>
         </div>
       </div>
     );

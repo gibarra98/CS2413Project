@@ -12,7 +12,7 @@ export default class UserProfile extends Component {
           <div className="profile__image">
           <FontAwesomeIcon icon={faUser}size="lg" />
           </div>
-          <h4>Gabriel Ibarra</h4>
+          <h4>Anon</h4>
         </div>
         <div className="box"></div>
         <div className="profile__card">
@@ -20,8 +20,7 @@ export default class UserProfile extends Component {
             <h4>Information</h4>
           </div>
           <div className="card__content">
-            <p><b>Alias: </b>Gab</p>
-            <p><b>Joined: </b>October 25,2022</p>
+            <p><b>Alias: </b>Anon</p>
           </div>
         </div>
       </div>
