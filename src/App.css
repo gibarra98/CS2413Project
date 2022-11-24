@@ -1,3 +1,9 @@
+/* $left-color:  #242e4d;
+$right-color: #897e79;
+$green-dark:  #35c3c1;
+$green-light: #00d6b7;
+$gray:        #8f8f8f;
+$gray-light:  #f5f6f8; */
 * {
   box-sizing: border-box;
 }
@@ -13,6 +19,7 @@ body {
   height: 100%;
 }
 .App {
+  text-align: center;
   max-width: 90%;
   margin: auto;
   background-color: #fff;
@@ -78,4 +85,56 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #ee0a1d;
+}
+
+.joinChatContainer{
+  
+  margin: auto;
+}
+.inputBlock{
+  border:1px solid black;
+  border-radius: 8px;
+  width: 100%;
+  display: block;
+  margin-bottom:25px;
+  /* padding-bottom: 25px; */
+}
+svg{
+  margin-right: 10px;
+  margin-left: 10px;
+  height: 100;
+
+}
+button {
+    display: block;
+    padding: 1em;
+    width: 100%;
+    background-color:#ee0a1d;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: .75em;
+    font-weight: 600;
+    text-shadow: 0 1px 0 rgba(black, .2);
+    border-radius: 8px;
+    
+    /* &:focus {
+      outline: none;
+      transition: transform .15s ease;
+      transform: scale(1.1);
+    } */
+}
+
+input {
+  flex: 1;
+  padding: 1em;
+  border: 0;
+  color: #8f8f8f;
+  font-size: 1rem;
+
+  /* &:focus {
+    outline: none;
+    transition: transform .15s ease;
+    transform: scale(1.1);
+  } */
 }

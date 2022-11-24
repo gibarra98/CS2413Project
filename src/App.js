@@ -3,8 +3,11 @@ import './App.css';
 import Nav from './components/nav/Nav';
 import ChatBody from './components/chatBody/ChatBody';
 import io from "socket.io-client";
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { faL } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { faLock } from '@fortawesome/free-solid-svg-icons'
 
 const socket = io.connect("ws://localhost:3000", {transports: ['websocket']});
 
@@ -14,18 +17,29 @@ function App() {
     <div className="App">
       {!showChat 
       ? (<div className="joinChatContainer">
+          <div>
           <h3>Join A Chat</h3>
-          <input
+          <div className='inputBlock'>
+              <FontAwesomeIcon icon={faUser} />
+            <input
+              type="text"
+              placeholder="Username"
+            />
+          </div>
+          <div className='inputBlock'>
+            <FontAwesomeIcon icon={faLock} />
+            <input
+          className='roomCode'
             type="text"
-            placeholder="John..."
+            placeholder="Room Code"
           />
-          <input
-            type="text"
-            placeholder="Room ID..."
-          />
-          <button onClick="">Join A Room</button>
-        </div>) 
-      : (<Nav></Nav>,<ChatBody/>)}
+          </div>
+          <button onClick={()=>{
+            setShowChat(true);
+          }}>Join A Room</button>
+        </div></div>) 
+      : (<React.Fragment><Nav></Nav>
+      <ChatBody></ChatBody></React.Fragment>)}
 
     </div>
   );
