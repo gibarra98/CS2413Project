@@ -6,10 +6,7 @@ import ChatItem from "./ChatItem";
 
 function ChatContent () {
   // const messagesEndRef = createRef(null);
-  let key = 3;
-  let chatItms = [
-  ];
-
+  let key = 0;
   // constructor(props) {
   //   super(props);
   //   this.state = {
@@ -18,7 +15,7 @@ function ChatContent () {
   //   };
   // }
 
-  const [chat, setChat] = useState(chatItms);
+  const [chat, setChat] = useState([]);
   const [msg, setMessage] = useState("");
 
   // const scrollToBottom = () => {
@@ -49,16 +46,15 @@ function ChatContent () {
 
   const onButtonClick = (e) => {
     e.preventDefault();
-    if (msg != "") {
-      chatItms.push({
+    if (msg !== "") {
+      setChat((list) => [...list, {
         key: key,
         type: "",
         msg: msg,
         image:
           "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-      });
+      }]);
       key++;
-      setChat(chatItms);
       // scrollToBottom();
     }
   }
@@ -77,15 +73,11 @@ function ChatContent () {
         //   // scrollToBottom();
         //   setMessage("");
         // }
-        console.log(chatItms);
+        console.log(chat);
 
       }
     });
-    window.addEventListener("keydown", (e) => {
-      if (e.key === '38') {
-        console.info(chatItms);
-      }
-    });
+
     // scrollToBottom();
   });
 
