@@ -1,66 +1,98 @@
-import React, { Component, useState, createRef, useEffect } from "react";
+import React, {useState, createRef, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import "./chatContent.css";
 import ChatItem from "./ChatItem";
 
-export default class ChatContent extends Component {
-  messagesEndRef = createRef(null);
-  chatItms = [
-    
+function ChatContent () {
+  // const messagesEndRef = createRef(null);
+  let key = 3;
+  let chatItms = [
   ];
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      chat: this.chatItms,
-      msg: "",
-    };
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     chat: this.chatItms,
+  //     msg: "",
+  //   };
+  // }
 
-  scrollToBottom = () => {
-    this.messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-  };
+  const [chat, setChat] = useState(chatItms);
+  const [msg, setMessage] = useState("");
 
-  importNewMessage(message) {
-    this.chatItms.push({
-      key: 1,
-      type: "",
-      msg: message,
-      image:
-        "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-    })
-  }
+  // const scrollToBottom = () => {
+  //   messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+  // };
 
-  addNewMessage = () => {
-    this.chatItms.push({
-      key: 1,
-      type: "",
-      msg: this.state.msg,
-      image:
-        "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-    })
-  }
+  // const importNewMessage = (message)  => {
+  //   chatItms.push({
+  //     key: key,
+  //     type: "",
+  //     msg: message,
+  //     image:
+  //       "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
+  //   })
+  //   key++;
+  // }
 
-  onButtonClick = (e) => {
-    if (this.state.msg != "") {
-      this.chatItms.push({
-        key: 1,
+  // const addNewMessage = () => {
+  //   chatItms.push({
+  //     key: key,
+  //     type: "",
+  //     msg: msg,
+  //     image:
+  //       "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
+  //   })
+  //   key++;
+  // }
+
+  const onButtonClick = (e) => {
+    e.preventDefault();
+    if (msg != "") {
+      chatItms.push({
+        key: key,
         type: "",
-        msg: this.state.msg,
+        msg: msg,
         image:
           "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
       });
-      this.setState({ chat: [...this.chatItms] });
-      this.scrollToBottom();
+      key++;
+      setChat(chatItms);
+      // scrollToBottom();
     }
   }
 
-  onStateChange = (e) => {
-    this.setState({ msg: e.target.value });
+  useEffect(() => {
+    window.addEventListener("keydown", (e) => {
+      if (e.key === 'Enter') {
+        // if (msg != "") {
+        //   chatItms.push({
+        //     key: key,
+        //     type: "",
+        //     msg: msg,
+        //   });
+        //   key++;
+        //   setChat(chatItms);
+        //   // scrollToBottom();
+        //   setMessage("");
+        // }
+        console.log(chatItms);
+
+      }
+    });
+    window.addEventListener("keydown", (e) => {
+      if (e.key === '38') {
+        console.info(chatItms);
+      }
+    });
+    // scrollToBottom();
+  });
+
+  const onStateChange = (e) => {
+    setMessage(e.target.value);
   };
 
-  render() {
     return (
       <div className="main__chatcontent">
         <div className="content__header">
@@ -72,19 +104,18 @@ export default class ChatContent extends Component {
         </div>
         <div className="content__body">
           <div className="chat__items">
-            {this.state.chat.map((itm, index) => {
+            {chat.map((itm, index) => {
               return (
                 <ChatItem
                   animationDelay={index + 2}
                   key={itm.key}
                   user={itm.type ? itm.type : "me"}
                   msg={itm.msg}
-                  image={itm.image}
                 />
               );
             })}
           </div>
-          <div ref={this.messagesEndRef} />
+          {/* <div ref={messagesEndRef} /> */}
         </div>
         <div className="content__footer">
           <form className="sendNewMessage" id='chat-form'>
@@ -92,15 +123,15 @@ export default class ChatContent extends Component {
               id = "msg"
               type="text"
               placeholder="Type a message here"
-              onChange={this.onStateChange}
-              value={this.state.msg}
+              onChange={onStateChange}
+              value={msg}
             />
-            <button className="btnSendMsg" onClick={this.onButtonClick}>
+            <button className="btnSendMsg" onClick={onButtonClick}>
               <FontAwesomeIcon icon={faPaperPlane} />
             </button>
           </form>
         </div>
       </div>
     );
-  }
 }
+export default ChatContent;

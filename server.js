@@ -1,17 +1,26 @@
 const path = require('path');
 const http = require('http');
 const express = require('express');
-const socketio = require('socket.io');
+const { Server } = require('socket.io');
+// const cors = require("cors");
 const { isStringObject } = require('util/types');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketio(server);
-const PORT = 3000 || process.env.PORT;
+const io = new Server(server
+//     {
+//     cors: {
+//         origin: "http://localhost:3000",
+//         methods: ["GET", "POST"]
+//     }
+// }
+)
+const PORT = 3000;// || process.env.PORT;
 
 app.use(express.static(path.join(__dirname, 'build')));
 
 io.on('connection', function(socket) {
+    console.log("User Connected");
 
     socket.broadcast.emit('message', 'A user has joined the chat');
 
