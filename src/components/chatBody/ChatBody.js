@@ -3,13 +3,13 @@ import "./ChatBody.css";
 import ChatContent from "../chatContent/ChatContent";
 import UserProfile from "../userProfile/userProfile";
 
-export default class ChatBody extends Component {
-  render() {
+function ChatBody ({socket}) {
     return (
       <div className="chatBody">
-        <ChatContent />
+        <ChatContent socket={socket}/>
         <UserProfile />
       </div>
     );
-  }
 }
+
+export default ChatBody;

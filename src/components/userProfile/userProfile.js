@@ -12,15 +12,15 @@ export default class UserProfile extends Component {
           <div className="profile__image">
           <FontAwesomeIcon icon={faUser}size="lg" />
           </div>
-          <h4>Anon</h4>
+          <h4>Username</h4>
         </div>
         <div className="box"></div>
         <div className="profile__card">
           <div className="card__header" onClick={this.toggleInfo}>
-            <h4>Information</h4>
+            <h4>Users</h4>
           </div>
           <div className="card__content">
-            <p><b>Alias: </b>Anon</p>
+            {/* <p><b>Alias: </b>Anon</p> */}
           </div>
         </div>
       </div>

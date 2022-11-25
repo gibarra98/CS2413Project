@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import "./chatContent.css";
 import ChatItem from "./ChatItem";
+//import { StrictEventEmitter } from "socket.io/dist/typed-events";
+//import { Socket } from "socket.io-client";
 
-function ChatContent () {
+function ChatContent ({ socket }) {
   // const messagesEndRef = createRef(null);
   let key = 0;
   // constructor(props) {
@@ -44,13 +46,21 @@ function ChatContent () {
   //   key++;
   // }
 
-  const onButtonClick = (e) => {
-    e.preventDefault();
+  const sendMessage = async (e) => {
+    if (e) {
+      e.preventDefault();
+    }
     if (msg !== "") {
+      await socket.emit("chatMessage", msg);
+    }
+  }
+
+  const addMessage = (message) => {
+    if (message !== "") {
       setChat((list) => [...list, {
         key: key,
         type: "",
-        msg: msg,
+        msg: message,
         image:
           "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
       }]);
@@ -62,24 +72,17 @@ function ChatContent () {
   useEffect(() => {
     window.addEventListener("keydown", (e) => {
       if (e.key === 'Enter') {
-        // if (msg != "") {
-        //   chatItms.push({
-        //     key: key,
-        //     type: "",
-        //     msg: msg,
-        //   });
-        //   key++;
-        //   setChat(chatItms);
-        //   // scrollToBottom();
-        //   setMessage("");
-        // }
-        console.log(chat);
-
+        sendMessage();
       }
     });
 
+    socket.on("receive-message", (message) => {
+      console.log(message);
+      addMessage(message);
+    });
+
     // scrollToBottom();
-  });
+  }, [socket]);
 
   const onStateChange = (e) => {
     setMessage(e.target.value);
@@ -118,7 +121,7 @@ function ChatContent () {
               onChange={onStateChange}
               value={msg}
             />
-            <button className="btnSendMsg" onClick={onButtonClick}>
+            <button className="btnSendMsg" onClick={sendMessage}>
               <FontAwesomeIcon icon={faPaperPlane} />
             </button>
           </form>

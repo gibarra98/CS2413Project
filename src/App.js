@@ -39,7 +39,7 @@ function App() {
           }}>Join A Room</button>
         </div></div>) 
       : (<React.Fragment><Nav></Nav>
-      <ChatBody></ChatBody></React.Fragment>)}
+      <ChatBody socket={socket}></ChatBody></React.Fragment>)}
 
     </div>
   );

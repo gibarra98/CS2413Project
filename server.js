@@ -28,8 +28,8 @@ io.on('connection', function(socket) {
         io.emit('message', 'A user has left the chat');
     });
 
-    socket.on('chatMessage', msg => {
-        io.emit('message', msg)
+    socket.on('chatMessage', (msg) => {
+        io.emit('receive-message', msg);
     });
     
 });
