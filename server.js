@@ -20,7 +20,7 @@ const PORT = 3000;// || process.env.PORT;
 app.use(express.static(path.join(__dirname, 'build')));
 
 io.on('connection', function(socket) {
-    console.log("User Connected");
+    console.log("User "+ socket.id +" Connected");
 
     socket.broadcast.emit('message', 'A user has joined the chat');
 
@@ -28,8 +28,9 @@ io.on('connection', function(socket) {
         io.emit('message', 'A user has left the chat');
     });
 
-    socket.on('chatMessage', (msg) => {
-        io.emit('receive-message', msg);
+    socket.on('send_message', (msg) => {
+        console.log(msg)
+        io.emit('receive_message', msg);
     });
     
 });

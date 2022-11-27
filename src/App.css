@@ -96,7 +96,7 @@ body {
   border-radius: 8px;
   width: 100%;
   display: block;
-  margin-bottom:25px;
+  margin-top:25px;
   /* padding-bottom: 25px; */
 }
 svg{
@@ -137,4 +137,10 @@ input {
     transition: transform .15s ease;
     transform: scale(1.1);
   } */
+}
+
+.errorMessage {
+  font-size: 15px;
+  margin: 15px;
+  color: #ee0a1d;
 }
