@@ -17,7 +17,7 @@ function App() {
   const [roomCodeEntered, setRoomCode] = useState("");
   const [invalidInput, setInvalidInput] = useState(false);
 
-  const roomCode = "poop";
+  const roomCode = "password";
 
 
   const onUserChange = (e) => {
