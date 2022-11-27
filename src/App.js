@@ -13,6 +13,51 @@ const socket = io.connect("ws://localhost:3000", {transports: ['websocket']});
 
 function App() {
   const [showChat, setShowChat] = useState(false);
+  const [username, setUsername] = useState("");
+  const [roomCodeEntered, setRoomCode] = useState("");
+  const [invalidInput, setInvalidInput] = useState(false);
+
+  const roomCode = "password";
+
+
+  const onUserChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const onRoomCodeChange = (e) => {
+    setRoomCode(e.target.value);
+  };
+
+  const validateUser = (username, roomCode) =>{
+    if(username !== ""){
+      if(roomCode !== ""){
+        console.log("here");
+        allowedUsers.forEach((user, i) => {
+          if(user === username){
+            if(roomCodeEntered == roomCode){
+              setShowChat(true);
+            }
+            else{
+              console.log("log");
+              setInvalidInput(true);
+            }
+          }
+          else{
+            setInvalidInput(true);
+          }
+        });
+      }
+      else{
+        setInvalidInput(true);
+      }
+    }
+    else{
+      setInvalidInput(true);
+    }
+  }
+
+  const allowedUsers = ["gab", "jacob", "justin"];
+
   return (
     <div className="App">
       {!showChat 
@@ -24,6 +69,7 @@ function App() {
             <input
               type="text"
               placeholder="Username"
+              onChange={onUserChange}
             />
           </div>
           <div className='inputBlock'>
@@ -32,15 +78,21 @@ function App() {
           className='roomCode'
             type="text"
             placeholder="Room Code"
+            onChange={onRoomCodeChange}
           />
           </div>
+         {invalidInput 
+         ?  <div className='errorMessage'>
+         You have entered invalid credentials.
+            </div> 
+         : <div className='errorMessage' style={{margin:"40px", width: "200px"}}>
+            </div> } 
           <button onClick={()=>{
-            setShowChat(true);
+            validateUser(username, roomCode);
           }}>Join A Room</button>
         </div></div>) 
       : (<React.Fragment><Nav></Nav>
-      <ChatBody socket={socket}></ChatBody></React.Fragment>)}
-
+      <ChatBody socket={socket} username={username}></ChatBody></React.Fragment>)}
     </div>
   );
 }

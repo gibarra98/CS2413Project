@@ -3,11 +3,11 @@ import "./ChatBody.css";
 import ChatContent from "../chatContent/ChatContent";
 import UserProfile from "../userProfile/userProfile";
 
-function ChatBody ({socket}) {
+function ChatBody ({socket, username}) {
     return (
       <div className="chatBody">
-        <ChatContent socket={socket}/>
-        <UserProfile />
+        <ChatContent socket={socket} username={username}/>
+        <UserProfile username={username} />
       </div>
     );
 }

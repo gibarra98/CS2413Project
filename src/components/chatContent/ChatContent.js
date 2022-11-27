@@ -3,64 +3,39 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import "./chatContent.css";
 import ChatItem from "./ChatItem";
-//import { StrictEventEmitter } from "socket.io/dist/typed-events";
-//import { Socket } from "socket.io-client";
 
-function ChatContent ({ socket }) {
-  // const messagesEndRef = createRef(null);
+function ChatContent ({ socket, username }) {
   let key = 0;
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     chat: this.chatItms,
-  //     msg: "",
-  //   };
-  // }
+
 
   const [chat, setChat] = useState([]);
-  const [msg, setMessage] = useState("");
+  const [message, setMessage] = useState("");
 
   // const scrollToBottom = () => {
   //   messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   // };
 
-  // const importNewMessage = (message)  => {
-  //   chatItms.push({
-  //     key: key,
-  //     type: "",
-  //     msg: message,
-  //     image:
-  //       "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-  //   })
-  //   key++;
-  // }
-
-  // const addNewMessage = () => {
-  //   chatItms.push({
-  //     key: key,
-  //     type: "",
-  //     msg: msg,
-  //     image:
-  //       "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
-  //   })
-  //   key++;
-  // }
-
   const sendMessage = async (e) => {
     if (e) {
       e.preventDefault();
     }
-    if (msg !== "") {
-      await socket.emit("chatMessage", msg);
+    if (message !== "") {
+      const messageData = {
+        message: message,
+        type: "",
+        username: username
+      }
+      await socket.emit("send_message", messageData);
     }
   }
 
-  const addMessage = (message) => {
-    if (message !== "") {
+  const addMessage = (data) => {
+    if (data !== "") {
+      const messageFrom = data.username === username ? "" : "other"
       setChat((list) => [...list, {
         key: key,
-        type: "",
-        msg: message,
+        type: messageFrom,
+        msg: data.message,
         image:
           "https://pbs.twimg.com/profile_images/1116431270697766912/-NfnQHvh_400x400.jpg",
       }]);
@@ -76,7 +51,7 @@ function ChatContent ({ socket }) {
       }
     });
 
-    socket.on("receive-message", (message) => {
+    socket.on("receive_message", (message) => {
       console.log(message);
       addMessage(message);
     });
@@ -104,7 +79,7 @@ function ChatContent ({ socket }) {
                 <ChatItem
                   animationDelay={index + 2}
                   key={itm.key}
-                  user={itm.type ? itm.type : "me"}
+                  user={itm.type}
                   msg={itm.msg}
                 />
               );
@@ -119,7 +94,7 @@ function ChatContent ({ socket }) {
               type="text"
               placeholder="Type a message here"
               onChange={onStateChange}
-              value={msg}
+              value={message}
             />
             <button className="btnSendMsg" onClick={sendMessage}>
               <FontAwesomeIcon icon={faPaperPlane} />
