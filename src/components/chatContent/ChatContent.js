@@ -4,7 +4,7 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import "./chatContent.css";
 import ChatItem from "./ChatItem";
 
-function ChatContent ({ socket, username }) {
+function ChatContent ({ socket, username, room }) {
   let key = 0;
 
 
@@ -23,7 +23,8 @@ function ChatContent ({ socket, username }) {
       const messageData = {
         message: message,
         type: "",
-        username: username
+        username: username, 
+        room: room
       }
       await socket.emit("send_message", messageData);
     }
@@ -52,8 +53,13 @@ function ChatContent ({ socket, username }) {
     });
 
     socket.on("receive_message", (message) => {
+      const messageFrom = message.username === username ? "" : "other"
       console.log(message);
-      addMessage(message);
+      setChat((list) => [...list, {
+        key: key,
+        type: messageFrom,
+        msg: message.message,
+      }]);
     });
 
     // scrollToBottom();
