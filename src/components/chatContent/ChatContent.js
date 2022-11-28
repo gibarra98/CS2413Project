@@ -52,7 +52,7 @@ function ChatContent ({ socket, username, room }) {
       }
     });
 
-    socket.on("receive_message", (message) => {
+    socket.off("receive_message").on("receive_message", (message) => {
       const messageFrom = message.username === username ? "" : "other"
       console.log(message);
       setChat((list) => [...list, {
