@@ -34,7 +34,9 @@ function ChatContent ({ socket, username, room }) {
         room: room
       }
       await socket.emit("send_message", messageData);
+      setMessage("");
     }
+    console.log(message);
   }
 
   const addMessage = (data) => {
@@ -59,12 +61,12 @@ function ChatContent ({ socket, username, room }) {
       }
     });
 
-    window.addEventListener("keyup", (e) => {
-      if (e.key === 'Enter') {
-        var input = document.getElementById("msg")
-        input.value = "";
-      }
-    })
+    //window.addEventListener("keyup", (e) => {
+    //  if (e.key === 'Enter') {
+    //    var input = document.getElementById("msg")
+    //    input.value = "";
+    //  }
+    //})
 
     socket.off("receive_message").on("receive_message", (message) => {
       const messageFrom = message.username === username ? "" : "other"
