@@ -3,6 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons'
 import "./chatContent.css";
 import ChatItem from "./ChatItem";
+import { DoDecrypt, DoEncrypt } from "../../aes.js";
+import { useDispatch } from "react-redux";
+import {getValue} from "@testing-library/user-event/dist/utils";
+window.Buffer = window.Buffer || require("buffer").Buffer;
 
 function ChatContent ({ socket, username, room }) {
   let key = 0;
@@ -19,9 +23,12 @@ function ChatContent ({ socket, username, room }) {
     if (e) {
       e.preventDefault();
     }
+
     if (message !== "") {
+    //encryption
+    const ans = DoEncrypt(message);
       const messageData = {
-        message: message,
+        message: ans,
         type: "",
         username: username, 
         room: room
@@ -52,13 +59,24 @@ function ChatContent ({ socket, username, room }) {
       }
     });
 
+    window.addEventListener("keyup", (e) => {
+      if (e.key === 'Enter') {
+        var input = document.getElementById("msg")
+        input.value = "";
+      }
+    })
+
     socket.off("receive_message").on("receive_message", (message) => {
       const messageFrom = message.username === username ? "" : "other"
+
+      //decrypting the message
+      const rec = DoDecrypt(message.message);
+
       console.log(message);
       setChat((list) => [...list, {
         key: key,
         type: messageFrom,
-        msg: message.message,
+        msg: rec,
       }]);
     });
 
