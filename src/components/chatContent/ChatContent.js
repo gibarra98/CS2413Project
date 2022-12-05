@@ -27,16 +27,16 @@ function ChatContent ({ socket, username, room }) {
     if (message !== "") {
     //encryption
     const ans = DoEncrypt(message);
+    const usr = DoEncrypt(username);
+    const rm = DoEncrypt(room);
       const messageData = {
         message: ans,
         type: "",
-        username: username, 
-        room: room
+        username: usr
       }
       await socket.emit("send_message", messageData);
       setMessage("");
     }
-    console.log(message);
   }
 
   const addMessage = (data) => {
@@ -69,16 +69,19 @@ function ChatContent ({ socket, username, room }) {
     //})
 
     socket.off("receive_message").on("receive_message", (message) => {
-      const messageFrom = message.username === username ? "" : "other"
 
-      //decrypting the message
-      const rec = DoDecrypt(message.message);
+      //decrypting the message contents
+      const ans = DoDecrypt(message.message);
+      const usrRec = DoDecrypt(message.username);
+
+      const messageFrom = usrRec === username ? "" : "other"
 
       console.log(message);
+      console.log(usrRec);
       setChat((list) => [...list, {
         key: key,
         type: messageFrom,
-        msg: rec,
+        msg: ans,
       }]);
     });
 

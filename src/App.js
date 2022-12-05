@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 
-const socket = io.connect("ws://localhost:3001", {transports: ['websocket']});
+const socket = io.connect("ws://" + document.location.hostname + ":3001", {transports: ['websocket']});
 
 function App() {
   const [showChat, setShowChat] = useState(false);
@@ -17,7 +17,7 @@ function App() {
   const [roomCodeEntered, setRoomCode] = useState("");
   const [invalidInput, setInvalidInput] = useState(false);
 
-  const roomCode = "password";
+  const roomCode = process.env.REACT_APP_PASSWORD;
 
   const joinRoom = () => {
     socket.emit("join_room", roomCode);
@@ -36,7 +36,7 @@ function App() {
     if(username !== ""){
       if(roomCode !== ""){
         console.log("here");
-        allowedUsers.forEach((user, i) => {
+        allowedUsers[0].forEach((user, i) => {
           if(user === username){
             if(roomCodeEntered === roomCode){
               setShowChat(true);
@@ -61,7 +61,7 @@ function App() {
     }
   }
 
-  const allowedUsers = ["gab", "jacob", "justin"];
+  const allowedUsers = [process.env.REACT_APP_ALLOWED_USERS.split(" ")];
 
   return (
     <div className="App">

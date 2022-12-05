@@ -30,12 +30,12 @@ io.on('connection', function(socket) {
 
     socket.on("join_room", (room) => {
         socket.join(room);
-        console.log("User "+ socket.id+ " joined room "+ room);
+        console.log("User "+ socket.id+ " joined room");
     })
 
     socket.on('send_message', (data) => {
         console.log(data)
-        io.to(data.room).emit('receive_message', data);
+        io.emit('receive_message', data);
     });
     
 });
