@@ -37,7 +37,6 @@ function ChatContent ({ socket, username, room }) {
       await socket.emit("send_message", messageData);
       setMessage("");
     }
-    console.log(message);
   }
 
   const addMessage = (data) => {
