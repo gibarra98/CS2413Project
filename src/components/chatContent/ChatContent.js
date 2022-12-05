@@ -77,6 +77,7 @@ function ChatContent ({ socket, username, room }) {
       const messageFrom = usrRec === username ? "" : "other"
 
       console.log(message);
+      console.log(usrRec);
       setChat((list) => [...list, {
         key: key,
         type: messageFrom,

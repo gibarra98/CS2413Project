@@ -6,7 +6,7 @@ import UserProfile from "../userProfile/userProfile";
 function ChatBody ({socket, username, room}) {
     return (
       <div className="chatBody">
-        <ChatContent socket={socket} username={username} room={room}/>
+        <ChatContent socket={socket} username={socket.id} room={room}/>
         <UserProfile username={username} />
       </div>
     );
